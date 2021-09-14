@@ -1,10 +1,62 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import DJImage from '../public/images/10_dj.png'
+import uploadImageIcon from '../public/images/download.svg';
+import React, { useState } from 'react';
 
 
 export default function Home() {
+  const [defaultColor, setDefaultColor] = useState({opacity: 1, border: "none"});
+  const allSongs = [];
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files || [] ;
+    
+    for (var i = 0; i < selectedFile.length; i ++ ) {
+      const type: string = selectedFile[i].type
+      if (type === "audio/mpeg") {
+        console.log(selectedFile[i]);
+      }
+      else {
+        return alert("File not supported")
+      }
+    }
 
+  }
+  const handleDragOver = (e: React.DragEvent<HTMLElement>) => {
+    e.preventDefault();
+    setDefaultColor({opacity: 0.7, border: "1px dotted yellow"})
+  }
+  const handleDrop = (e: React.DragEvent<HTMLElement>) => {
+    e.preventDefault();
+    setDefaultColor({opacity: 1, border: "none"})
+    const dragedItems = e.dataTransfer.items
+    const dragedFiles = e.dataTransfer.files
+
+    if (dragedItems) {
+      // Use DataTransferItemList interface to access the file(s)
+      for (var i = 0; i < dragedItems.length; i++) {
+        // If dropped items aren't files, reject them
+        const kind = dragedItems[i].kind
+        const type = dragedItems[i].type
+        if (type === "audio/mpeg") {
+          const file = dragedItems[i].getAsFile()
+          console.log(file);
+        } else {
+          return alert("File not supported")
+        }
+      }
+    } else {
+      // Use DataTransfer interface to access the file(s)
+      for (var i = 0; i < dragedFiles.length; i ++ ) {
+        const type: string = dragedFiles[i].type
+        if (type === "audio/mpeg") {
+          console.log(dragedFiles[i]);
+        } else {
+          return alert("File not supported")
+        }
+      }
+    }
+  }
   return (
     <div className={styles.container}>
       <Head>
@@ -13,7 +65,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <section className={styles.heading}>
+        <section className={styles.heading}
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+          style={defaultColor}
+        >
           <div className={styles.details}>
             <div className={styles.title}>
               <h1>The Legacy playlist</h1>
@@ -21,10 +77,10 @@ export default function Home() {
             </div>
             <form className={styles.musicForm}>
               <button type="button">
-                <label 
-                  htmlFor="fileElem"
-                >
+                <label htmlFor="fileElem">
                   Select Song
+                  <img src={uploadImageIcon.src} className={styles.uploadIcon} alt="upload image" />
+                  <div style={{display: "none"}}> Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
                 </label>
               </button>
               <span>or drop a file</span>
@@ -33,19 +89,18 @@ export default function Home() {
                 id="fileElem"
                 multiple
                 accept="audio/mp3"
-                onChange={() => console.log("You changed me")}
-                onDragEnter={() => console.log("You drag me")}
-                onDragOver={() => console.log("You drag me")}
-                onDragLeave={() => console.log("You drag me")}
-                onDrop={() => console.log("You drag me")}
-                />
+                onChange={handleChange}
+              />
             </form>
           </div>
           <img
+            className={styles.entertainImage}
             src={DJImage.src}
             alt="New DJ"
           />
-
+        </section>
+        <section className={styles.dragList} >
+          <p>Available songs ({allSongs.length})</p>
         </section>
       </main>
     </div>

@@ -11,19 +11,23 @@
   grid-template-columns: 1fr;
   align-items: center;
   position: relative;
-  top: 80px;
+  margin: 100px 0 0 0px;
 }
-.heading img {
+.heading .entertainImage {
   position: absolute;
   bottom: 0;
   height: 420px;
   left: 40%;
 }
+.heading .uploadIcon {
+  width: 15px;
+  height: 15px;
+  margin: 0 0 0 5px;
+}
 .details {
   display: grid;
   padding: 0 0px 0 40px;
   gap: 30px;
-  position: relative;
 }
 .details .title {
   margin: 0 0 0 0;
@@ -70,4 +74,6 @@
 }
 .musicForm label {
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
