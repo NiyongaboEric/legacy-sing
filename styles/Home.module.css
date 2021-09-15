@@ -1,4 +1,4 @@
-.main {  
+.main {
   margin: 0 auto 0 auto;
   width: 92%;
 }
@@ -71,4 +71,21 @@
   font-size: 20px;
   color: #ffff;
   width: 150px;
+}
+.emptyList {
+  height: 30vh;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+}
+.emptyList p, .dragList p {
+  font-weight: bold;
+}
+.emptyList img {
+  height: 40px;
+  width: 40px;
+  margin: auto;
+}
+.allList {
+  height: 30vh;
 }

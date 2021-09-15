@@ -8,14 +8,12 @@ export const SelectMusic = () => {
   const [defaultColor, setDefaultColor] = useState<Object>({opacity: 1, border: "none"});
   const { addPlaylist } = useContext(MusicContext)
   
-  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files || [] ;
     for (var i = 0; i < selectedFile.length; i ++ ) {
       const type: string = selectedFile[i].type
       if (type === "audio/mpeg") {
-        console.log(selectedFile[i]);
-        addPlaylist({1: 'song name'})
+        addPlaylist(selectedFile[i])
       }
       else {
         return alert("File not supported")
@@ -36,9 +34,7 @@ export const SelectMusic = () => {
         const kind = dragedItems[i].kind
         const type = dragedItems[i].type
         if (type === "audio/mpeg") {
-          const file = dragedItems[i].getAsFile()
-          console.log(file);
-          addPlaylist({1: 'song name'})
+          addPlaylist(dragedItems[i].getAsFile())
         } else {
           return alert("File not supported")
         }
@@ -48,8 +44,7 @@ export const SelectMusic = () => {
       for (var i = 0; i < dragedFiles.length; i ++ ) {
         const type: string = dragedFiles[i].type
         if (type === "audio/mpeg") {
-          console.log(dragedFiles[i]);
-          addPlaylist({1: 'song name'})
+          addPlaylist(dragedFiles[i])
         } else {
           return alert("File not supported")
         }

@@ -5,7 +5,7 @@ import { ImusicContextType } from './types';
 
 
 export const MusicProvider: FC = ({ children }) => {
-  const [playlist, setPlaylist] = useState<object[]>(musicContextDefaultValues.playlist)
+  const [playlist, setPlaylist] = useState<object[] | File[]>(musicContextDefaultValues.playlist)
   const addPlaylist = (newSong: object) => {
     return setPlaylist((playlist) => [...playlist, newSong]);
   }
