@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
-import DJImage from '../public/images/10_dj.png'
-import uploadImageIcon from '../public/images/download.svg';
-import styles from '../styles/Home.module.css'
-
+import React, { useState, useContext } from 'react';
+import DJImage from '../../public/images/10_dj.png'
+import uploadImageIcon from '../../public/images/download.svg';
+import styles from '../../styles/Home.module.css'
+import { MusicContext } from '../Context/MusicContext'
 
 export const SelectMusic = () => {
-  const [defaultColor, setDefaultColor] = useState({opacity: 1, border: "none"});
-
+  const [defaultColor, setDefaultColor] = useState<Object>({opacity: 1, border: "none"});
+  const { addPlaylist } = useContext(MusicContext)
+  
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files || [] ;
     for (var i = 0; i < selectedFile.length; i ++ ) {
       const type: string = selectedFile[i].type
       if (type === "audio/mpeg") {
         console.log(selectedFile[i]);
+        addPlaylist({1: 'song name'})
       }
       else {
         return alert("File not supported")
@@ -35,6 +38,7 @@ export const SelectMusic = () => {
         if (type === "audio/mpeg") {
           const file = dragedItems[i].getAsFile()
           console.log(file);
+          addPlaylist({1: 'song name'})
         } else {
           return alert("File not supported")
         }
@@ -45,6 +49,7 @@ export const SelectMusic = () => {
         const type: string = dragedFiles[i].type
         if (type === "audio/mpeg") {
           console.log(dragedFiles[i]);
+          addPlaylist({1: 'song name'})
         } else {
           return alert("File not supported")
         }
@@ -92,22 +97,3 @@ export const SelectMusic = () => {
   </section>
   )
 }
-
-export const PlayMusic = () => {
-  return (
-    <section className={styles.dragList} >
-      <p>Available songs ({[].length})</p>
-    </section>
-  )
-}
-
-const Home = () => {
-  return (
-    <main className={styles.main}>
-      <SelectMusic />
-      <PlayMusic />
-    </main>
-  )
-}
-
-export default Home;
