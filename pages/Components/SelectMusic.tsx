@@ -29,7 +29,7 @@ export const SelectMusic = () => {
     }
   }
 
-  const handleDrop = (e: React.DragEvent<HTMLElement>) => {
+  const handleDrop = async (e: React.DragEvent<HTMLElement>) => {
     e.preventDefault();
     setDefaultColor({opacity: 1, border: "none"})
     const dragedItems = e.dataTransfer.items
@@ -41,8 +41,14 @@ export const SelectMusic = () => {
         // If dropped items aren't files, reject them
         const kind = dragedItems[i].kind
         const type = dragedItems[i].type
-        if (type === "audio/mpeg") {
-          addPlaylist(dragedItems[i].getAsFile())
+        if (type === "audio/mpeg") {  
+          const base64Format = await toBase64(dragedItems[i].getAsFile())
+          addPlaylist({
+            audioId: uuidv4(),
+            audioFile: dragedItems[i] ? dragedItems[i].getAsFile : dragedFiles[i],
+            isPlaying: false,
+            audioInstance: new Audio(base64Format)
+          })
         } else {
           return alert("File not supported")
         }
@@ -52,7 +58,13 @@ export const SelectMusic = () => {
       for (var i = 0; i < dragedFiles.length; i ++ ) {
         const type: string = dragedFiles[i].type
         if (type === "audio/mpeg") {
-          addPlaylist(dragedFiles[i])
+          const base64Format = await toBase64(dragedFiles[i])
+          addPlaylist({
+            audioId: uuidv4(),
+            audioFile: dragedFiles[i],
+            isPlaying: false,
+            audioInstance: new Audio(base64Format)
+          })
         } else {
           return alert("File not supported")
         }

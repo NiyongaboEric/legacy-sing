@@ -16,6 +16,7 @@ const EmptyPlaylist: FC = () => {
 
 const AllPlaylist: FC = () => {
   const { playlist, playPause } = useContext(MusicContext);
+  console.log(playlist);
 
   const handlePlayPause = (item) => {
     if (item.isPlaying) {
