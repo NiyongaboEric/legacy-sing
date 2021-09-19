@@ -1,7 +1,6 @@
 import { FC, useContext } from 'react';
 import { MusicContext } from '../Context/MusicContext';
 import emptyIcon from '../../public/images/music-note.svg';
-import { toBase64 } from '../utils/convert';
 import styles from '../../styles/Home.module.css'
 
 const EmptyPlaylist: FC = () => {

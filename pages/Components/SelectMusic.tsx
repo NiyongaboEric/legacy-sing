@@ -37,27 +37,31 @@ export const SelectMusic = () => {
   
     if (dragedItems) {
       // Use DataTransferItemList interface to access the file(s)
-      for (var i = 0; i < dragedItems.length; i++) {
+      for (let i = 0; i < dragedItems.length; i++) {
         // If dropped items aren't files, reject them
         const kind = dragedItems[i].kind
         const type = dragedItems[i].type
-        if (type === "audio/mpeg") {  
-          const base64Format = await toBase64(dragedItems[i].getAsFile())
-          addPlaylist({
-            audioId: uuidv4(),
-            audioFile: dragedItems[i] ? dragedItems[i].getAsFile : dragedFiles[i],
-            isPlaying: false,
-            audioInstance: new Audio(base64Format)
-          })
+        if (type === "audio/mpeg") {
+          // const base64Format = await toBase64(dragedItems[i].getAsFile())
+          toBase64(dragedItems[i].getAsFile())
+            .then((res) => {
+              addPlaylist({
+                audioId: uuidv4(),
+                audioFile: dragedItems[i] ? dragedItems[i].getAsFile() : dragedFiles[i],
+                isPlaying: false,
+                audioInstance: new Audio(res)
+              })
+            })
         } else {
           return alert("File not supported")
         }
       }
     } else {
       // Use DataTransfer interface to access the file(s)
-      for (var i = 0; i < dragedFiles.length; i ++ ) {
+      for (let i = 0; i < dragedFiles.length; i ++ ) {
         const type: string = dragedFiles[i].type
         if (type === "audio/mpeg") {
+          console.log(2, i);
           const base64Format = await toBase64(dragedFiles[i])
           addPlaylist({
             audioId: uuidv4(),
