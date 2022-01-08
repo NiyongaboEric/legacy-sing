@@ -5,15 +5,15 @@ import { ImusicContextType } from './types';
 
 
 export const MusicProvider: FC = ({ children }) => {
-  const [playlist, setPlaylist] = useState<object[]>(musicContextDefaultValues.playlist)
+  const [playlist, setPlaylist]: any = useState<object[]>(musicContextDefaultValues.playlist)
 
   const addPlaylist = (newSong: object) => {
-    return setPlaylist((playlist) => [...playlist, newSong]);
+    return setPlaylist((playlist: any) => [...playlist, newSong]);
   }
 
   const playPause = (currentAudioId: string) => {
     const AudioIndex = playlist.findIndex(
-      (item => item.audioId === currentAudioId)
+      ((item: any) => item.audioId === currentAudioId)
     )
     return playlist[AudioIndex].isPlaying = !playlist[AudioIndex].isPlaying
   }

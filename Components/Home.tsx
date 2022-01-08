@@ -1,6 +1,6 @@
 import { PlayMusic } from "./PlayMusic";
 import { SelectMusic } from "./SelectMusic";
-import styles from '../../styles/Home.module.css'
+import styles from '../styles/Home.module.css'
 
 const Home = () => {
   return (

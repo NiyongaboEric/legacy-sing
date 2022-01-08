@@ -1,7 +1,17 @@
 import { FC, useContext } from 'react';
 import { MusicContext } from '../Context/MusicContext';
-import emptyIcon from '../../public/images/music-note.svg';
-import styles from '../../styles/Home.module.css'
+import emptyIcon from '../public/images/music-note.svg';
+import styles from '../styles/Home.module.css'
+
+interface ItemType {
+  audioFile: File;
+  audioId: any;
+  audioInstance: {
+    pause: Function,
+    play: Function
+  };
+  isPlaying: Boolean;
+}
 
 const EmptyPlaylist: FC = () => {
   return (
@@ -16,7 +26,7 @@ const EmptyPlaylist: FC = () => {
 const AllPlaylist: FC = () => {
   const { playlist, playPause } = useContext(MusicContext);
 
-  const handlePlayPause = (item) => {
+  const handlePlayPause = (item: ItemType) => {
     if (item.isPlaying) {
       item.audioInstance.pause()
     } else {
@@ -29,7 +39,7 @@ const AllPlaylist: FC = () => {
     <section className={styles.dragList}> 
       <p>Playlist</p>
       {
-        playlist.map((item) => (
+        playlist.map((item: any) => (
         <div key={item.audioId}>
           <button onClick={() => handlePlayPause(item)}>Play | Pause</button>
         </div>

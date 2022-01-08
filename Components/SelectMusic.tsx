@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import DJImage from '../../public/images/10_dj.png'
-import uploadImageIcon from '../../public/images/download.svg'
+import DJImage from '../public/images/10_dj.png'
+import uploadImageIcon from '../public/images/download.svg'
 import { MusicContext } from '../Context/MusicContext'
 import { toBase64 } from '../utils/convert'
-import styles from '../../styles/Home.module.css'
+import styles from '../styles/Home.module.css'
 
 export const SelectMusic = () => {
   const [defaultColor, setDefaultColor] = useState<Object>({opacity: 1, border: "none"});
@@ -15,7 +15,7 @@ export const SelectMusic = () => {
     for (var i = 0; i < selectedFile.length; i ++ ) {
       const type: string = selectedFile[i].type
       if (type === "audio/mpeg") {
-        const base64Format = await toBase64(selectedFile[i])
+        const base64Format: any = await toBase64(selectedFile[i])
         addPlaylist({
           audioId: uuidv4(),
           audioFile: selectedFile[i],
@@ -32,7 +32,7 @@ export const SelectMusic = () => {
   const handleDrop = async (e: React.DragEvent<HTMLElement>) => {
     e.preventDefault();
     setDefaultColor({opacity: 1, border: "none"})
-    const dragedItems = e.dataTransfer.items
+    const dragedItems: any = e.dataTransfer.items
     const dragedFiles = e.dataTransfer.files
   
     if (dragedItems) {
@@ -44,7 +44,7 @@ export const SelectMusic = () => {
         if (type === "audio/mpeg") {
           // const base64Format = await toBase64(dragedItems[i].getAsFile())
           toBase64(dragedItems[i].getAsFile())
-            .then((res) => {
+            .then((res: any) => {
               addPlaylist({
                 audioId: uuidv4(),
                 audioFile: dragedItems[i] ? dragedItems[i].getAsFile() : dragedFiles[i],
@@ -62,7 +62,7 @@ export const SelectMusic = () => {
         const type: string = dragedFiles[i].type
         if (type === "audio/mpeg") {
           console.log(2, i);
-          const base64Format = await toBase64(dragedFiles[i])
+          const base64Format: any = await toBase64(dragedFiles[i])
           addPlaylist({
             audioId: uuidv4(),
             audioFile: dragedFiles[i],
@@ -108,11 +108,7 @@ export const SelectMusic = () => {
           />
         </form>
       </div>
-      <img
-      className={styles.entertainImage}
-      src={DJImage.src}
-      alt="New DJ"
-    />
+      <img className={styles.entertainImage} src={DJImage.src} alt="New DJ" />
   </section>
   )
 }
