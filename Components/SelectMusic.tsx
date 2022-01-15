@@ -1,7 +1,7 @@
-import React, { useState, useContext } from 'react'
-import { v4 as uuidv4 } from 'uuid'
-import DJImage from '../public/images/10_dj.png'
-import uploadImageIcon from '../public/images/download.svg'
+import React, { useState, useContext } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import Image from 'next/image';
+import man_With_heaphones_img from '../public/images/man_in_heaphones.png';
 import { MusicContext } from '../Context/MusicContext'
 import { toBase64 } from '../utils/convert'
 import styles from '../styles/Home.module.css'
@@ -89,15 +89,10 @@ export const SelectMusic = () => {
     >
       <div className={styles.details}>
         <div className={styles.title}>
-          <h1>The Legacy playlist</h1>
-          <p>Listen To The Music</p>
+          <h1>Upload &amp; Share</h1>
         </div>
         <form className={styles.musicForm}>
-          <label htmlFor="fileElem">
-            Select Song
-            <img src={uploadImageIcon.src} className={styles.uploadIcon} alt="upload image" />
-            <div style={{display: "none"}}> Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-          </label>
+          <label htmlFor="fileElem">Upload now</label>
           <span>or drop a file</span>
           <input
             type="file"
@@ -108,7 +103,14 @@ export const SelectMusic = () => {
           />
         </form>
       </div>
-      <img className={styles.entertainImage} src={DJImage.src} alt="New DJ" />
+      <div className={styles.entertainImage}>
+        <Image
+          src={man_With_heaphones_img.src}
+          alt="New DJ"
+          width={250}
+          height={250}
+          />
+      </div>
   </section>
-  )
-}
+  );
+};
