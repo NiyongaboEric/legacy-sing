@@ -1,14 +1,15 @@
 import React, { useState, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Image from 'next/image';
-import man_With_heaphones_img from '../public/images/man_in_heaphones.png';
 import { MusicContext } from '../Context/MusicContext'
 import { toBase64 } from '../utils/convert'
+import man_With_heaphones_img from '../public/images/man_in_heaphones.png';
+import playIcon from '../public/images/play_icon.svg';
 import styles from '../styles/Home.module.css'
 
 export const SelectMusic = () => {
   const [defaultColor, setDefaultColor] = useState<Object>({opacity: 1, border: "none"});
-  const { playlist, addPlaylist } = useContext(MusicContext)
+  const { addPlaylist } = useContext(MusicContext);
   
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files || [] ;
@@ -20,7 +21,9 @@ export const SelectMusic = () => {
           audioId: uuidv4(),
           audioFile: selectedFile[i],
           isPlaying: false,
-          audioInstance: new Audio(base64Format)
+          audioInstance: new Audio(base64Format),
+          playPauseIcon: playIcon,
+          randomColor: Math.random().toString(16).substring(3, 9),
         })
       }
       else {
@@ -42,14 +45,15 @@ export const SelectMusic = () => {
         const kind = dragedItems[i].kind
         const type = dragedItems[i].type
         if (type === "audio/mpeg") {
-          // const base64Format = await toBase64(dragedItems[i].getAsFile())
           toBase64(dragedItems[i].getAsFile())
             .then((res: any) => {
               addPlaylist({
                 audioId: uuidv4(),
                 audioFile: dragedItems[i] ? dragedItems[i].getAsFile() : dragedFiles[i],
                 isPlaying: false,
-                audioInstance: new Audio(res)
+                audioInstance: new Audio(res),
+                playPauseIcon: playIcon,
+                randomColor: Math.random().toString(16).substring(3, 9),
               })
             })
         } else {

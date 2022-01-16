@@ -18,10 +18,19 @@ export const MusicProvider: FC = ({ children }) => {
     return playlist[AudioIndex].isPlaying = !playlist[AudioIndex].isPlaying
   }
 
+  const changePlayPauseIcon = (currentAudioId: string, icon: string) => {
+    const findIndex = playlist.findIndex(
+      ((item: any) => item.audioId === currentAudioId)
+    );
+    playlist[findIndex].playPauseIcon = icon;
+    setPlaylist((playlist: any) => [...playlist ]);
+  };
+
   const value: ImusicContextType = {
     playlist,
     addPlaylist,
-    playPause
+    playPause,
+    changePlayPauseIcon,
   } 
   
   return (
